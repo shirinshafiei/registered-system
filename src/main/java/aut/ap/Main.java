@@ -12,11 +12,23 @@ public class Main {
         System.out.println("Enter [L]ogin or [S]ignup: ");
         String command = sc.nextLine();
         switch (command)  {
-            case "L" :
+            case "L":
                 System.out.println("Email: ");
                 String email = sc.nextLine();
                 System.out.println("password: ");
                 String password = sc.nextLine();
+                try {
+                    Person p = personService.login(email, password);
+                    System.out.println("welcome" + " " + p.getFirstName() + " " + p.getLastName());
+                }catch (RuntimeException e) {
+                    System.err.println(e.getMessage());
+                }
+                break;
+            case "Login":
+                System.out.println("Email: ");
+                email = sc.nextLine();
+                System.out.println("password: ");
+                password = sc.nextLine();
                 try {
                     Person p = personService.login(email, password);
                     System.out.println("welcome" + " " + p.getFirstName() + " " + p.getLastName());
@@ -39,6 +51,28 @@ public class Main {
                 while (password.length() < 8) {
                 System.out.println("Weak password");
                 password = sc.nextLine();
+                }
+                try {
+                    personService.signUp(firstName, lastName, age, email, password);
+                }catch (IllegalArgumentException e) {
+                    System.err.println(e.getMessage());
+                }
+                break;
+            case "Signup" :
+                System.out.println("First name: ");
+                firstName = sc.nextLine();
+                System.out.println("Last name: ");
+                lastName = sc.nextLine();
+                System.out.println("age: ");
+                age = sc.nextInt();
+                sc.nextLine();
+                System.out.println("email: ");
+                email = sc.nextLine();
+                System.out.println("password: ");
+                password = sc.nextLine();
+                while (password.length() < 8) {
+                    System.out.println("Weak password");
+                    password = sc.nextLine();
                 }
                 try {
                     personService.signUp(firstName, lastName, age, email, password);
